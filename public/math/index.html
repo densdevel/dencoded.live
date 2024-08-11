@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dencoded.live/math</title>
+    <style>
+      body {
+        font-family: cursive;
+        color: white;
+        background-color: black;
+      }
+      p {
+        font-family: monospace;
+        font-size: 11px;
+      }
+      .MathJax {
+        display: inline !important;
+      }
+      #formulas li {
+        padding: 20px;
+      }
+      #formulas p {
+        position: absolute;
+        top: 594px;
+        left: 69px;
+      }
+      .note {
+        position: absolute;
+        top: -24px;
+        left: 30px;
+      }
+    </style>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["$$", "$$"],
+            ["\\(", "\\)"],
+          ],
+        },
+        svg: {
+          fontCache: "global",
+          scale: 1.5, // Adjust the scale of the SVG output
+          mtextInheritFont: true,
+          merrorInheritFont: true,
+        },
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Pre-Calculus Concepts</h1>
+    <br />
+    <h3>Formulas:</h3>
+    <ul id="formulas">
+      <li>Average Rate of Change: &nbsp; $$ r = \frac{f(b)-f(a)}{b-a} $$</li>
+      <li>Distance Formula: &nbsp; $$ d= \sqrt{(x_2-x_1)^2+(y_2-y_1)^2} $$</li>
+      <li>Quadratic Formula: &nbsp; $$ x = \frac{-b \pm \sqrt{b^2 -4ac}}{2a} $$</li>
+      <li>Point Slope Formula: &nbsp; $$ (y - y_1) = m(x - x_1) + b $$</li>
+      <li>Slope Intercept Formula: &nbsp;$$ y = mx + b $$</li>
+      <li>Compounding Interest Formula: &nbsp;$$ A = P(1 + \frac{r}{n})^{nt} $$&nbsp;</li>
+      <p>P = Initial Balance, r = interest rate, n = Applied times per time period (t)</p>
+      <li>Division Property of Logs: &nbsp; $$log_x\frac{a}{b} = log_xa - log_xb$$</li>
+    </ul>
+  </body>
+</html>

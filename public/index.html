@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+        background-color: rgb(18, 20, 23);
+      }
+      a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      #nav {
+        padding: 5px;
+        position: fixed;
+        background-color: rgba(159, 190, 186, 0.616);
+        width: 100vw;
+      }
+      #nav > * {
+        padding-right: 10px;
+        padding-left: 10px;
+      }
+      #main {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding-top: 28px;
+        font-family: "Lobster", cursive;
+      }
+      .mantras {
+        flex: 15%;
+        text-align: center;
+        padding: 8px;
+        line-height: 2;
+        letter-spacing: 1.5px;
+        font-size: 21.5px;
+        color: rgba(239, 230, 235, 0.578);
+      }
+      .projects {
+        display: inline;
+      }
+      @media (width <= 768px) {
+        .mantras {
+          width: 70vw;
+          height: 100%;
+          position: absolute;
+          color: rgb(37, 93, 75);
+          display: inline-block;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        #logo {
+          max-width: 80vw;
+        }
+        #mantras2 {
+          top: 700px;
+        }
+        #center {
+          background-color: rgba(20, 58, 62, 80);
+        }
+        #page {
+          position: relative;
+        }
+      }
+      #center {
+        height: 2000px;
+        width: 70vw;
+        color: rgb(238, 235, 230);
+        background-color: rgb(20, 58, 62);
+        line-height: 1;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+      #logo {
+        text-align: center;
+        position: relative;
+      }
+      #logo:hover {
+        color: rgb(223, 222, 164);
+      }
+      #secret-button:hover {
+        cursor: move;
+      }
+      #mapInfo {
+        color: white;
+        padding-top: 28px;
+        display: none;
+        flex-direction: column;
+      }
+      @keyframes flash {
+        50% {
+          opacity: 0;
+        }
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+    <title>dencoded.live</title>
+  </head>
+  <body>
+    <header id="nav">
+      <a id="math" href="/public/math" style="justify-content: center; align-items: center; width: 300px; height: 40px"> Math </a>
+      <a id="randomOsuMap">Random Osu! Map </a>
+      <input style="width: 30px; padding: 0px" type="number" id="mapQuantity" min="1" max="5" value="1" />
+    </header>
+    <div id="mapInfo"></div>
+    <div id="main">
+      <h1 class="mantras">
+        Don't always expect the worst. You might not recognize when something good comes along. &nbsp;&nbsp; Live for the joy of helping others. It will teach
+        you how to help yourself. &nbsp;&nbsp; The pursuit of knowledge is also the journey through which one gains wisdom. &nbsp;&nbsp; The journey must be
+        more rewarding than the destination for it to be a worthwhile one. &nbsp;&nbsp; Love deeply and truly. &nbsp;&nbsp; Exercising the mind is just as, if
+        not more important than exercising the body. &nbsp;&nbsp; &lt;3 -den
+      </h1>
+      <div id="center">
+        <h3 id="logo">dencoded.live</h3>
+        <div id="page">
+          <div style="font-family: monospace; font-size: 20px; font-weight: 100">Projects:</div>
+          <ul>
+            <li class="project"><a href="/public/connect4/">Connect 4</a></li>
+          </ul>
+        </div>
+      </div>
+      <h1 class="mantras" id="mantras2">
+        You begin to learn how to love others the moment you begin to learn how to love yourself.&nbsp;&nbsp; Don't let your mistakes get you down. Mistakes can
+        be a good thing if you let yourself learn from them. &nbsp;&nbsp; Pay attention to the care that goes into other's kindnesses towards you. &nbsp;&nbsp;
+        Meditation is to the mind what medicine is to the body. &nbsp;&nbsp; Soak in the sunlight whenever you are blessed by it. &nbsp;&nbsp; Take care of your
+        surroundings. A healthy environment cultivates growth. &nbsp;&nbsp;
+      </h1>
+    </div>
+    <a style="position: absolute; height: 100px; width: 100vw" id="secret-button" href="https://dencoded.live/secret"> </a>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
