@@ -2,22 +2,26 @@ const express = require("express");
 const path = require("path");
 const axios = require("axios");
 const cors = require("cors");
+// const { Client } = require("osu-web.js");
 
+// const token = await getToken();
+// const client = new Client(token.access_token)
 const app = express();
 const PORT = 3000;
+const rootDir = path.resolve(__dirname, "../");
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(rootDir, "public")));
 app.set("trust proxy", true);
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(rootDir, "public", "index.html"));
 });
 
 app.get("/check-link", async (req, res) => {
   const { url } = req.query;
   try {
-    const response = await axios.head(url); // Use HEAD or GET based on your needs
+    const response = await axios.get(url); // Use HEAD or GET based on your needs
     res.json({ exists: response.status >= 200 && response.status < 300 });
   } catch (error) {
     res.json({ exists: false });

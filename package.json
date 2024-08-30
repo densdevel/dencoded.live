@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A personal server for hosting projects online",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
@@ -15,6 +16,7 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "nodemon": "^3.1.4",
+    "osu-web.js": "^2.5.0",
     "path": "^0.12.7"
   }
 }

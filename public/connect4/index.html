@@ -3,25 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Connect 4</title>
+    <title>Connect Four</title>
     <style>
-      body,
-      html {
-        background-color: black;
-        padding: 0;
-        margin: 0;
-        line-height: 0;
-        width: 600px;
-      }
-      canvas {
-        padding: 0;
-        margin: 0;
-        display: inline-block;
-        width: 60px;
-        height: 60px;
+      body {
+        background-color: rgb(0, 0, 0);
+        user-select: none;
+        color: white;
+
+        .btn {
+          background-color: rgb(39, 39, 39);
+          border: none;
+          border-radius: 10px;
+          color: rgb(168, 168, 168);
+          cursor: pointer;
+          font-size: 20px;
+          font-weight: bold;
+          padding: 10px 20px;
+          text-align: center;
+          font-size: 16px;
+          margin: 4px 2px;
+          transition-duration: 0.4s;
+        }
+        .btn:hover {
+          opacity: 0.9;
+        }
+        #startBtns {
+          position: fixed;
+        }
       }
     </style>
   </head>
-  <body></body>
-  <script src="index.js"></script>
+
+  <body>
+    <div id="game" style="flex-direction: column; display: flex; width: 100vw; height: 100vh; align-items: center; justify-content: center">
+      <h1 style="margin-top: 300px">Connect 4</h1>
+      <div id="startBtns" style="display: flex">
+        <button class="btn" id="startRed" style="width: 50vw; height: 100px">Start as Red</button>
+        <button class="btn" id="startYellow" style="width: 50vw; height: 100px">Start as Yellow</button>
+      </div>
+      <canvas id="canvas" width="350" height="300" style="padding-bottom: 300px; background-color: transparent"></canvas>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
 </html>
