@@ -21,7 +21,7 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
   // Helper Functions ================================
   async function searchForMap(controller) {
     while (recursions > 0) {
-      const randomNumber = Math.floor(Math.random() * 2500000) + 1;
+      const randomNumber = Math.floor(Math.random() * 99000) + 1;
       const url = `https://osu.ppy.sh/beatmapsets/${randomNumber}`;
       const exists = await checkLinkExists(url, controller);
       if (exists) {
