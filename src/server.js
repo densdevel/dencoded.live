@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(rootDir, "public", "index.html"));
 });
 
+app.get("/aboutme", (req, res) => {
+  res.sendFile(path.join(rootDir, "public", "aboutme", "index.html"));
+});
+
 app.get("/check-link", async (req, res) => {
   const { url } = req.query;
   try {

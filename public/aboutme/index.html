@@ -7,3 +7,106 @@
   </head>
   <body></body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+        background-color: rgb(18, 20, 23);
+      }
+      a {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      #nav {
+        padding: 5px;
+        position: fixed;
+        background-color: rgba(159, 190, 186, 0.616);
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+      #nav > * {
+        padding-right: 15px;
+        padding-left: 15px;
+        font-family: monospace;
+        font-size: 16px;
+      }
+      #nav a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+      }
+      #main {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding-top: 60px;
+        font-family: "Lobster", cursive;
+      }
+      #center {
+        min-height: 500px;
+        width: 70vw;
+        color: rgb(238, 235, 230);
+        background-color: rgb(20, 58, 62);
+        line-height: 1.6;
+        padding: 24px;
+      }
+      #logo {
+        text-align: center;
+        position: relative;
+        font-size: 40px;
+      }
+      #logo:hover {
+        color: rgb(223, 222, 164);
+      }
+      .content {
+        font-family: monospace;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      @media (width <= 768px) {
+        #logo {
+          max-width: 80vw;
+        }
+        #center {
+          background-color: rgba(20, 58, 62, 80);
+        }
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+    <title>About Me - dencoded.live</title>
+  </head>
+  <body>
+    <header id="nav">
+      <a href="/aboutme">About Me</a>
+      <a id="math" href="/math">Math</a>
+      <a id="randomOsuMap">Random Osu! Map </a>
+      <input style="width: 30px; padding: 0px" type="number" id="mapQuantity" min="1" max="15" value="1" />
+    </header>
+    <div id="main">
+      <div id="center">
+        <h3 id="logo">About Me</h3>
+        <div class="content">
+          <p>Hello! I'm a software developer passionate about creating interactive web experiences.</p>
+          <p>This website serves as a playground for my various projects and experiments.</p>
+          <p>Feel free to explore the different sections and projects listed on the home page!</p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/index.js"></script>
+  </body>
+</html>
