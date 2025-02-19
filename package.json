@@ -12,9 +12,9 @@
   "author": "Jade VanAlsburg",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.7.3",
+    "axios": "^1.7.9",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
+    "express": "^4.21.2",
     "nodemon": "^3.1.4",
     "osu-web.js": "^2.5.0",
     "path": "^0.12.7"
