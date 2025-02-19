@@ -1,13 +1,16 @@
-const express = require("express");
-const path = require("path");
-const axios = require("axios");
-const cors = require("cors");
-// const { Client } = require("osu-web.js");
+import express from "express";
+import path from "path";
+import axios from "axios";
+import cors from "cors";
+import { fileURLToPath } from 'url';
+// import { Client } from "osu-web.js";
 
 // const token = await getToken();
 // const client = new Client(token.access_token)
 const app = express();
 const PORT = 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "../");
 
 app.use(cors());
