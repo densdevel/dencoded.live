@@ -13,7 +13,7 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
 
   // Clear previous results
   mapInfo.innerHTML = "";
-  mapInfo.style = mapInfoStyles;
+  
   const mapInfoStyles = {
     display: "flex",
     flexDirection: "column",
@@ -22,6 +22,9 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
     justifyContent: "center",
     fontSize: "0.8em",
   };
+  
+  // Apply all styles at once
+  Object.assign(mapInfo.style, mapInfoStyles);
 
   // Add loading indicator
   const loadingMsg = document.createElement("p");
