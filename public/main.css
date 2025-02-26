@@ -62,7 +62,7 @@ a {
 #page {
   font-size: 24px;
 }
-@media (width <= 768px) {
+@media (max-width: 768px) {
   .mantras {
     width: 70vw;
     height: 100%;
@@ -76,7 +76,8 @@ a {
     max-width: 80vw;
   }
   #center {
-    background-color: rgba(20, 58, 62, 80);
+    width: 90vw;
+    background-color: rgba(20, 58, 62, 0.8);
   }
   #page {
     position: relative;
