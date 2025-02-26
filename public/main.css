@@ -69,6 +69,8 @@ a:hover {
   font-size: 22px;
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 #dropdown a:last-child {
   border-bottom: none;

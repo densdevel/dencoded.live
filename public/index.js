@@ -11,7 +11,6 @@ if (isMobile.matches) {
     // Make sure dropdown has content before toggling
     if (!dropdown.hasChildNodes()) {
       dropdown.innerHTML = `
-        <a href="/">Home</a>
         <a href="/aboutme">About Me</a>
         <a href="/contact">Contact</a>
       `;
