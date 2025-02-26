@@ -2,10 +2,7 @@ const express = require("express");
 const path = require("path");
 const axios = require("axios");
 const cors = require("cors");
-// const { Client } = require("osu-web.js");
 
-// const token = await getToken();
-// const client = new Client(token.access_token)
 const app = express();
 const PORT = 3000;
 const rootDir = path.resolve(__dirname, "../");
@@ -19,11 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/aboutme", (req, res) => {
-  res.sendFile(path.join(rootDir, "public", "aboutme", "index.html"));
-});
-
-app.get("/aboutme/Resume.pdf", (req, res) => {
-  res.sendFile(path.join(rootDir, "public", "aboutme", "Resume.pdf"));
+  res.sendFile(path.join(rootDir, "public", "projects", "aboutme", "index.html"));
 });
 
 app.get("/check-link", async (req, res) => {

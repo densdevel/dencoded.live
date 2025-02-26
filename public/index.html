@@ -2,42 +2,6 @@
 <html lang="en">
   <head>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-      }
-      body,
-      html {
-        padding: 0;
-        margin: 0;
-        background-color: rgb(18, 20, 23);
-      }
-      a {
-        color: white;
-        text-decoration: none;
-        cursor: pointer;
-      }
-      #nav {
-        padding: 5px;
-        position: fixed;
-        background-color: rgba(159, 190, 186, 0.616);
-        width: 100vw;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-      #nav > * {
-        padding-right: 15px;
-        padding-left: 15px;
-        font-family: monospace;
-        font-size: 16px;
-      }
-      #nav a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 40px;
-      }
       #mapInfo {
         color: white;
         padding-top: 28px;
@@ -49,94 +13,8 @@
         padding-top: 10px;
         padding-bottom: 10px;
       }
-      #main {
-        display: flex;
-        justify-content: center;
-        margin: 0;
-        padding-top: 60px;
-        font-family: "Lobster", cursive;
-      }
-      #center {
-        height: 2000px;
-        width: 70vw;
-        color: rgb(238, 235, 230);
-        background-color: rgb(20, 58, 62);
-        line-height: 1;
-        padding-left: 24px;
-        padding-right: 24px;
-        padding-top: 20px;
-      }
-      #logo {
-        text-align: center;
-        position: relative;
-        font-size: 40px;
-      }
-      #logo:hover {
-        color: rgb(223, 222, 164);
-      }
-      #page {
-        font-size: 24px;
-      }
-      .project {
-        list-style: none;
-        width: 100%;
-        height: 100%;
-        font-size: 33px;
-        font-family: "Lobster";
-        justify-content: center;
-        align-items: center;
-      }
-      .project a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        padding-top: 36px;
-        padding-bottom: 36px;
-        text-align: center;
-      }
-      #projects {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        font-family: monospace;
-        font-size: 30px;
-        font-weight: 100;
-      }
-      @media (width <= 768px) {
-        .mantras {
-          width: 70vw;
-          height: 100%;
-          position: absolute;
-          color: rgb(37, 93, 75);
-          display: inline-block;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-        #logo {
-          max-width: 80vw;
-        }
-        #mantras2 {
-          top: 700px;
-        }
-        #center {
-          background-color: rgba(20, 58, 62, 80);
-        }
-        #page {
-          position: relative;
-        }
-      }
-      #secret-button:hover {
-        cursor: move;
-      }
-
-      @keyframes flash {
-        50% {
-          opacity: 0;
-        }
-      }
     </style>
+    <link rel="stylesheet" href="main.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -145,24 +23,19 @@
   </head>
   <body>
     <header id="nav">
+      <h3 id="logo">dencoded.live</h3>
       <a href="/aboutme">About Me</a>
-      <a id="math" href="/math">Math</a>
+      <a href="/contact">Contact</a>
       <a id="randomOsuMap">Random Osu! Map </a>
-      <input style="width: 30px; padding: 0px" type="number" id="mapQuantity" min="1" max="15" value="1" />
+      <input id="osuMapQuantity" style="width: 30px; padding: 0px" type="number" id="mapQuantity" min="1" max="15" value="1" />
+      <div id="dropdown"></div>
     </header>
     <div id="mapInfo"></div>
     <div id="main">
       <div id="center">
-        <h3 id="logo">dencoded.live</h3>
-        <div id="page">
-          <div id="projects">
-            Projects:
-            <li class="project"><a href="/connect4/">Connect 4 (Unfinished)</a></li>
-            <li class="project"><a href="/chess/">Chess (Unfinished)</a></li>
-          </div>
-        </div>
+        <div id="content"></div>
       </div>
     </div>
-    <script type="module" src="index.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

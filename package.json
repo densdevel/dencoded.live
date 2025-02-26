@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js",
-    "copy-osu-web": "cp ./node_modules/osu-web.js ./public/js/"
+    "start": "nodemon src/server.js"
   },
   "author": "Jade VanAlsburg",
   "license": "MIT",
@@ -15,7 +14,6 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "nodemon": "^3.0.1",
-    "osu-web.js": "^2.5.0",
     "path": "^0.12.7"
   }
 }
