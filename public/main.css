@@ -41,14 +41,16 @@ a {
   font-family: "Lobster", cursive;
 }
 #center {
-  height: 2000px;
+  min-height: 800px;
+  height: auto;
   width: 70vw;
   color: rgb(238, 235, 230);
   background-color: rgb(20, 58, 62);
-  line-height: 1;
+  line-height: 1.4;
   padding-left: 24px;
   padding-right: 24px;
   padding-top: 20px;
+  padding-bottom: 40px;
 }
 #logo {
   font-family: "Lobster", cursive;
