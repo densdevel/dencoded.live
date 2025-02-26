@@ -13,16 +13,19 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
 
   // Clear previous results
   mapInfo.innerHTML = "";
-  
+
   const mapInfoStyles = {
     display: "flex",
     flexDirection: "column",
     width: "10vw",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "0.8em",
+    fontSize: "22px",
+    position: "fixed",
+    top: "40px",
+    paddingLeft: "10px",
   };
-  
+
   // Apply all styles at once
   Object.assign(mapInfo.style, mapInfoStyles);
 
