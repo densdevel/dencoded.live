@@ -45,7 +45,7 @@ a:hover {
   align-items: center;
 }
 #nav a {
-  font-size: 16px;
+  font-size: 22px;
   font-family: monospace;
   height: 40px;
 }
@@ -55,7 +55,7 @@ a:hover {
   top: 65px;
   left: 0;
   width: 100%;
-  height: 20vh;
+  height: auto;
   background-color: rgba(159, 190, 186, 0.616);
   flex-direction: column;
   z-index: 100;
@@ -64,16 +64,19 @@ a:hover {
 #dropdown.show {
   display: flex;
 }
-#dropdown a {
-  padding: 12px 20px;
+#dropdown div a {
+  color: white;
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 10px;
   font-size: 22px;
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  width: 100%;
-  box-sizing: border-box;
   display: block;
+  cursor: pointer;
+  font-family: monospace;
 }
-#dropdown a:last-child {
+#dropdown div a:last-child {
   border-bottom: none;
 }
 #main {

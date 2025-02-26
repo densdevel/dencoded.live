@@ -1,4 +1,4 @@
-const randomMapQuantity = document.getElementById("mapQuantity");
+const randomMapQuantity = document.getElementById("osuMapQuantity");
 const mapInfo = document.getElementById("mapInfo");
 const isMobile = window.matchMedia("(max-width: 768px)");
 
@@ -10,9 +10,10 @@ if (isMobile.matches) {
     const dropdown = document.getElementById("dropdown");
     // Make sure dropdown has content before toggling
     if (!dropdown.hasChildNodes()) {
-      dropdown.innerHTML = `
+      dropdown.innerHTML = `<div>
         <a href="/aboutme">About Me</a>
         <a href="/contact">Contact</a>
+        </div>
       `;
     }
     dropdown.classList.toggle("show");
