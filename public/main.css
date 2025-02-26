@@ -53,13 +53,24 @@ a:hover {
   display: none;
   position: absolute;
   top: 50px;
+  left: 0;
   width: 100%;
   background-color: rgba(159, 190, 186, 0.9);
   flex-direction: column;
   z-index: 100;
+  padding: 10px 0;
 }
 #dropdown.show {
   display: flex;
+}
+#dropdown a {
+  padding: 12px 20px;
+  font-size: 18px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#dropdown a:last-child {
+  border-bottom: none;
 }
 #main {
   display: flex;

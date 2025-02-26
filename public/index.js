@@ -1,15 +1,18 @@
 const randomMapQuantity = document.getElementById("mapQuantity");
 const mapInfo = document.getElementById("mapInfo");
-const isMobile = window.matchMedia("(min-width: 768px)");
+const isMobile = window.matchMedia("(max-width: 768px)");
 
+// Logo click behavior
+const logo = document.getElementById("logo");
 if (isMobile.matches) {
-  const logo = document.getElementById("logo");
+  // On mobile, logo toggles dropdown
   logo.addEventListener("click", function () {
     const dropdown = document.getElementById("dropdown");
     dropdown.classList.toggle("show");
   });
 } else {
-  document.getElementById("logo").addEventListener("click", function () {
+  // On desktop, logo links to home
+  logo.addEventListener("click", function () {
     window.location.href = "/";
   });
 }
