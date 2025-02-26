@@ -8,9 +8,15 @@ if (isMobile.matches) {
   // On mobile, logo toggles dropdown
   logo.addEventListener("click", function () {
     const dropdown = document.getElementById("dropdown");
+    // Make sure dropdown has content before toggling
+    if (!dropdown.hasChildNodes()) {
+      dropdown.innerHTML = `
+        <a href="/">Home</a>
+        <a href="/aboutme">About Me</a>
+        <a href="/contact">Contact</a>
+      `;
+    }
     dropdown.classList.toggle("show");
-    dropdown.innerHTML = `<a href="/aboutme">About Me</a>
-        <a href="/contact">Contact</a>`;
   });
 } else {
   // On desktop, logo links to home
