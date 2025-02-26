@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "A personal server for hosting projects online",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "nodemon src/server.js",
     "copy-osu-web": "cp ./node_modules/osu-web.js ./public/js/"
   },
   "author": "Jade VanAlsburg",
