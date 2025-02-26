@@ -16,6 +16,7 @@ app.set("trust proxy", true);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(rootDir, "public", "index.html"));
+  res.sendFile(path.join(rootDir, "public", "main.css"));
 });
 
 app.get("/aboutme", (req, res) => {
