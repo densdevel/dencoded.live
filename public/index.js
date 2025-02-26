@@ -5,11 +5,10 @@ const mediaQuery = window.matchMedia("(max-width: 768px)");
 document.getElementById("randomOsuMap").addEventListener("click", async function (e) {
   //Immediate Calls ================================
   e.preventDefault();
-  let recursions = randomMapQuantity.value;
   const controller = new AbortController();
   const timeout = setTimeout(() => {
     controller.abort();
-  }, 10000);
+  }, 30000); // Increased timeout to 30 seconds since we're waiting for exact map count
 
   // Clear previous results
   mapInfo.innerHTML = "";
@@ -47,8 +46,10 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
   // Helper Functions ================================
   async function searchForMap(controller) {
     let foundMaps = 0;
-
-    while (recursions > 0) {
+    const requestedMaps = parseInt(randomMapQuantity.value);
+    
+    // Keep searching until we find the requested number of maps
+    while (foundMaps < requestedMaps) {
       const randomNumber = Math.floor(Math.random() * 2500000) + 1;
       const url = `https://osu.ppy.sh/beatmapsets/${randomNumber}`;
 
@@ -57,27 +58,18 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
         if (exists) {
           appendMap(url);
           foundMaps++;
-        } else {
-          let errorMsg = document.createElement("p");
-          errorMsg.textContent = `Attempt failed (ID: ${randomNumber})`;
-          errorMsg.style.color = "#888";
-          errorMsg.style.fontSize = "0.8em";
-          mapInfo.appendChild(errorMsg);
+          // Update loading message with progress
+          loadingMsg.textContent = `Found ${foundMaps}/${requestedMaps} maps...`;
         }
       } catch (error) {
         console.error(`Error checking map ${randomNumber}:`, error);
+        // Don't add error messages to the DOM, just log to console
       }
-
-      recursions -= 1;
     }
 
-    // Update loading message
+    // Update loading message when complete
     loadingMsg.textContent = `Search complete! Found ${foundMaps} maps.`;
     loadingMsg.style.fontWeight = "bold";
-
-    if (foundMaps === 0) {
-      mapInfo.innerHTML += `<p style="color: orange">No maps were found. Try again?</p>`;
-    }
   }
 
   async function checkLinkExists(url, controller) {
