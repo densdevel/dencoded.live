@@ -72,14 +72,13 @@ a {
     padding-left: 20px;
     padding-right: 20px;
   }
-  #logo {
-    max-width: 80vw;
+  #nav {
+    justify-content: center;
+  }
+  #nav a {
+    display: none;
   }
   #center {
     width: 90vw;
-    background-color: rgba(20, 58, 62, 0.8);
-  }
-  #page {
-    position: relative;
   }
 }

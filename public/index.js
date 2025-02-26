@@ -1,5 +1,6 @@
 const randomMapQuantity = document.getElementById("mapQuantity");
 const mapInfo = document.getElementById("mapInfo");
+const mediaQuery = window.matchMedia("(max-width: 768px)");
 
 document.getElementById("randomOsuMap").addEventListener("click", async function (e) {
   //Immediate Calls ================================
