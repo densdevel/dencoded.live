@@ -1,6 +1,6 @@
 const randomMapQuantity = document.getElementById("mapQuantity");
 const mapInfo = document.getElementById("mapInfo");
-const isMobile = window.matchMedia("(min-width: 768px)");
+const isMobile = window.matchMedia("(max-width: 768px)");
 
 if (isMobile.matches) {
   const logo = document.getElementById("logo");
