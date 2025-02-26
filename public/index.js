@@ -1,6 +1,18 @@
 const randomMapQuantity = document.getElementById("mapQuantity");
 const mapInfo = document.getElementById("mapInfo");
-const mediaQuery = window.matchMedia("(max-width: 768px)");
+const isMobile = window.matchMedia("(min-width: 768px)");
+
+if (isMobile.matches) {
+  const logo = document.getElementById("logo");
+  logo.addEventListener("click", function () {
+    const dropdown = document.getElementById("dropdown");
+    dropdown.classList.toggle("show");
+  });
+} else {
+  document.getElementById("logo").addEventListener("click", function () {
+    window.location.href = "/";
+  });
+}
 
 document.getElementById("randomOsuMap").addEventListener("click", async function (e) {
   //Immediate Calls ================================
@@ -47,7 +59,7 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
   async function searchForMap(controller) {
     let foundMaps = 0;
     const requestedMaps = parseInt(randomMapQuantity.value);
-    
+
     // Keep searching until we find the requested number of maps
     while (foundMaps < requestedMaps) {
       const randomNumber = Math.floor(Math.random() * 2500000) + 1;
