@@ -9,6 +9,8 @@ if (isMobile.matches) {
   logo.addEventListener("click", function () {
     const dropdown = document.getElementById("dropdown");
     dropdown.classList.toggle("show");
+    dropdown.innerHTML = `<a href="/aboutme">About Me</a>
+        <a href="/contact">Contact</a>`;
   });
 } else {
   // On desktop, logo links to home
