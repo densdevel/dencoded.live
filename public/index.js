@@ -1,28 +1,35 @@
 const randomMapQuantity = document.getElementById("osuMapQuantity");
 const mapInfo = document.getElementById("mapInfo");
-const isMobile = window.matchMedia("(max-width: 768px)");
+const logo = document.getElementById("logo");
+const dropdown = document.getElementById("dropdown");
+const mainPage = document.getElementById("main");
+const mobileScreen = window.matchMedia("(max-width: 768px)");
 
 // Logo click behavior
-const logo = document.getElementById("logo");
-if (isMobile.matches) {
-  // On mobile, logo toggles dropdown
+if (mobileScreen.matches) {
   logo.addEventListener("click", function () {
-    const dropdown = document.getElementById("dropdown");
-    // Make sure dropdown has content before toggling
-    if (!dropdown.hasChildNodes()) {
-      dropdown.innerHTML = `<div>
+    dropdown.innerHTML = `<div>
+        <a href="/">Home</a>
         <a href="/aboutme">About Me</a>
         <a href="/contact">Contact</a>
         </div>
       `;
-    }
     dropdown.classList.toggle("show");
+    mainPage.classList.add("fade");
+    mainPage.addEventListener("click", clickOffDropdown);
   });
 } else {
   // On desktop, logo links to home
   logo.addEventListener("click", function () {
     window.location.href = "/";
   });
+}
+
+function clickOffDropdown(e) {
+  if (!e.target.matches("dropdown")) {
+    dropdown.classList.toggle("show");
+    mainPage.classList.remove("fade");
+  }
 }
 
 document.getElementById("randomOsuMap").addEventListener("click", async function (e) {
