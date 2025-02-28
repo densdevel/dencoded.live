@@ -7,6 +7,11 @@ const mobileScreen = window.matchMedia("(max-width: 768px)");
 
 // Function to close dropdown when clicking outside
 function clickOffDropdown(e) {
+  // Don't close if clicking on a link inside the dropdown
+  if (e.target.tagName === 'A' && dropdown.contains(e.target)) {
+    return;
+  }
+  
   // Get dropdown position and dimensions
   const dropdownRect = dropdown.getBoundingClientRect();
   const logoRect = logo.getBoundingClientRect();
@@ -36,12 +41,22 @@ if (mobileScreen.matches) {
     // Prevent the click from immediately triggering the document click handler
     e.stopPropagation();
     // Set dropdown content
-    dropdown.innerHTML = `<div>
+    dropdown.innerHTML = `<div id="dropdown-inner">
         <a href="/">Home</a>
         <a href="/aboutme">About Me</a>
         <a href="/contact">Contact</a>
         </div>
       `;
+    
+    // Ensure links are clickable by adding event listeners
+    const links = dropdown.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent the click from bubbling up
+        // Navigate to the href
+        window.location.href = this.getAttribute('href');
+      });
+    });
     // Toggle dropdown visibility
     const isShowing = dropdown.classList.toggle("show");
     if (isShowing) {
