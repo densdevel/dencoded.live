@@ -64,6 +64,9 @@ a:hover {
 #dropdown.show {
   display: flex;
 }
+#dropdown div {
+  width: 100vw;
+}
 #dropdown div a {
   color: white;
   position: relative;
