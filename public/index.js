@@ -8,9 +8,7 @@ const mobileScreen = window.matchMedia("(max-width: 768px)");
 // Function to close dropdown when clicking outside
 function clickOffDropdown(e) {
   // Check if dropdown is open and click is outside dropdown and logo
-  if (dropdown.classList.contains('show') && 
-      !dropdown.contains(e.target) && 
-      !logo.contains(e.target)) {
+  if (dropdown.classList.contains("show") && !dropdown.contains(e.target) && !logo.contains(e.target)) {
     dropdown.classList.remove("show");
     mainPage.classList.remove("fade");
     // Remove the event listener when dropdown is closed
@@ -23,7 +21,6 @@ if (mobileScreen.matches) {
   logo.addEventListener("click", function (e) {
     // Prevent the click from immediately triggering the document click handler
     e.stopPropagation();
-    
     // Set dropdown content
     dropdown.innerHTML = `<div>
         <a href="/">Home</a>
@@ -31,16 +28,11 @@ if (mobileScreen.matches) {
         <a href="/contact">Contact</a>
         </div>
       `;
-    
     // Toggle dropdown visibility
     const isShowing = dropdown.classList.toggle("show");
-    
     if (isShowing) {
       mainPage.classList.add("fade");
-      // Add click listener to document with a small delay to avoid immediate triggering
-      setTimeout(() => {
-        document.addEventListener("click", clickOffDropdown);
-      }, 10);
+      document.addEventListener("click", clickOffDropdown);
     } else {
       mainPage.classList.remove("fade");
       document.removeEventListener("click", clickOffDropdown);
@@ -63,7 +55,7 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
 
   // Clear previous results
   mapInfo.innerHTML = "";
-
+  // Results style list
   const mapInfoStyles = {
     display: "flex",
     flexDirection: "column",
@@ -75,16 +67,13 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
     top: "40px",
     paddingLeft: "10px",
   };
-
   // Apply all styles at once
   Object.assign(mapInfo.style, mapInfoStyles);
-
   // Add loading indicator
   const loadingMsg = document.createElement("p");
   loadingMsg.textContent = `Searching for ${randomMapQuantity.value} maps...`;
   mapInfo.appendChild(loadingMsg);
-
-  //Try Catch Block ===============================
+  //Try links / catch errors while testing if links exist
   try {
     await searchForMap(controller);
   } catch (error) {
@@ -98,12 +87,10 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
   async function searchForMap(controller) {
     let foundMaps = 0;
     const requestedMaps = parseInt(randomMapQuantity.value);
-
     // Keep searching until we find the requested number of maps
     while (foundMaps < requestedMaps) {
       const randomNumber = Math.floor(Math.random() * 2500000) + 1;
       const url = `https://osu.ppy.sh/beatmapsets/${randomNumber}`;
-
       try {
         const exists = await checkLinkExists(url, controller);
         if (exists) {
@@ -117,7 +104,6 @@ document.getElementById("randomOsuMap").addEventListener("click", async function
         // Don't add error messages to the DOM, just log to console
       }
     }
-
     // Update loading message when complete
     loadingMsg.textContent = `Search complete! Found ${foundMaps} maps.`;
     loadingMsg.style.fontWeight = "bold";
