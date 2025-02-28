@@ -7,8 +7,22 @@ const mobileScreen = window.matchMedia("(max-width: 768px)");
 
 // Function to close dropdown when clicking outside
 function clickOffDropdown(e) {
-  // Check if dropdown is open and click is outside dropdown and logo
-  if (dropdown.classList.contains("show") && !dropdown.contains(e.target) && !logo.contains(e.target)) {
+  // Get dropdown position and dimensions
+  const dropdownRect = dropdown.getBoundingClientRect();
+  const logoRect = logo.getBoundingClientRect();
+  
+  // Check if click is outside both dropdown and logo
+  const isOutsideDropdown = e.clientX < dropdownRect.left || 
+                           e.clientX > dropdownRect.right || 
+                           e.clientY < dropdownRect.top || 
+                           e.clientY > dropdownRect.bottom;
+                           
+  const isOutsideLogo = e.clientX < logoRect.left || 
+                       e.clientX > logoRect.right || 
+                       e.clientY < logoRect.top || 
+                       e.clientY > logoRect.bottom;
+  
+  if (dropdown.classList.contains("show") && isOutsideDropdown && isOutsideLogo) {
     dropdown.classList.remove("show");
     mainPage.classList.remove("fade");
     // Remove the event listener when dropdown is closed
@@ -32,7 +46,10 @@ if (mobileScreen.matches) {
     const isShowing = dropdown.classList.toggle("show");
     if (isShowing) {
       mainPage.classList.add("fade");
-      document.addEventListener("click", clickOffDropdown);
+      // Add click listener with a small delay to avoid immediate triggering
+      setTimeout(() => {
+        document.addEventListener("click", clickOffDropdown);
+      }, 100);
     } else {
       mainPage.classList.remove("fade");
       document.removeEventListener("click", clickOffDropdown);
