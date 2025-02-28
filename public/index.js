@@ -5,31 +5,52 @@ const dropdown = document.getElementById("dropdown");
 const mainPage = document.getElementById("main");
 const mobileScreen = window.matchMedia("(max-width: 768px)");
 
+// Function to close dropdown when clicking outside
+function clickOffDropdown(e) {
+  // Check if dropdown is open and click is outside dropdown and logo
+  if (dropdown.classList.contains('show') && 
+      !dropdown.contains(e.target) && 
+      !logo.contains(e.target)) {
+    dropdown.classList.remove("show");
+    mainPage.classList.remove("fade");
+    // Remove the event listener when dropdown is closed
+    document.removeEventListener("click", clickOffDropdown);
+  }
+}
+
 // Logo click behavior
 if (mobileScreen.matches) {
-  logo.addEventListener("click", function () {
+  logo.addEventListener("click", function (e) {
+    // Prevent the click from immediately triggering the document click handler
+    e.stopPropagation();
+    
+    // Set dropdown content
     dropdown.innerHTML = `<div>
         <a href="/">Home</a>
         <a href="/aboutme">About Me</a>
         <a href="/contact">Contact</a>
         </div>
       `;
-    dropdown.classList.toggle("show");
-    mainPage.classList.add("fade");
-    mainPage.addEventListener("click", clickOffDropdown);
+    
+    // Toggle dropdown visibility
+    const isShowing = dropdown.classList.toggle("show");
+    
+    if (isShowing) {
+      mainPage.classList.add("fade");
+      // Add click listener to document with a small delay to avoid immediate triggering
+      setTimeout(() => {
+        document.addEventListener("click", clickOffDropdown);
+      }, 10);
+    } else {
+      mainPage.classList.remove("fade");
+      document.removeEventListener("click", clickOffDropdown);
+    }
   });
 } else {
   // On desktop, logo links to home
   logo.addEventListener("click", function () {
     window.location.href = "/";
   });
-}
-
-function clickOffDropdown(e) {
-  if (!e.target.matches("dropdown")) {
-    dropdown.classList.toggle("show");
-    mainPage.classList.remove("fade");
-  }
 }
 
 document.getElementById("randomOsuMap").addEventListener("click", async function (e) {
