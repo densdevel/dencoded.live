@@ -34,9 +34,10 @@ if (mobileScreen.matches) {
 
     // Make dropdown divs clickable links
     const dropdownBtns = dropdown.querySelectorAll(".dropdown-btn");
+    const routes = ["/", "/aboutme", "/contact"];
     for (let i = 0; i < dropdownBtns.length; i++) {
       dropdownBtns[i].addEventListener("click", function () {
-"
+        window.location.href = routes[i];
       });
     }
     // Toggle dropdown visibility
