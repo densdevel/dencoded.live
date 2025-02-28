@@ -7,64 +7,42 @@ const mobileScreen = window.matchMedia("(max-width: 768px)");
 
 // Function to close dropdown when clicking outside
 function clickOffDropdown(e) {
-  // Don't close if clicking on a link inside the dropdown
-  if (e.target.tagName === 'A' && dropdown.contains(e.target)) {
-    return;
-  }
-  
   // Get dropdown position and dimensions
   const dropdownRect = dropdown.getBoundingClientRect();
   const logoRect = logo.getBoundingClientRect();
-  
   // Check if click is outside both dropdown and logo
-  const isOutsideDropdown = e.clientX < dropdownRect.left || 
-                           e.clientX > dropdownRect.right || 
-                           e.clientY < dropdownRect.top || 
-                           e.clientY > dropdownRect.bottom;
-                           
-  const isOutsideLogo = e.clientX < logoRect.left || 
-                       e.clientX > logoRect.right || 
-                       e.clientY < logoRect.top || 
-                       e.clientY > logoRect.bottom;
-  
+  const isOutsideDropdown = e.clientX < dropdownRect.left || e.clientX > dropdownRect.right || e.clientY < dropdownRect.top || e.clientY > dropdownRect.bottom;
+  const isOutsideLogo = e.clientX < logoRect.left || e.clientX > logoRect.right || e.clientY < logoRect.top || e.clientY > logoRect.bottom;
+
   if (dropdown.classList.contains("show") && isOutsideDropdown && isOutsideLogo) {
     dropdown.classList.remove("show");
     mainPage.classList.remove("fade");
-    // Remove the event listener when dropdown is closed
-    document.removeEventListener("click", clickOffDropdown);
   }
 }
-
 // Logo click behavior
 if (mobileScreen.matches) {
+  document.addEventListener("click", clickOffDropdown);
   logo.addEventListener("click", function (e) {
     // Prevent the click from immediately triggering the document click handler
     e.stopPropagation();
     // Set dropdown content
-    dropdown.innerHTML = `<div id="dropdown-inner">
-        <a href="/">Home</a>
-        <a href="/aboutme">About Me</a>
-        <a href="/contact">Contact</a>
-        </div>
+    dropdown.innerHTML = `
+        <div class="dropdown-btn">Home</div>
+        <div class="dropdown-btn">About Me</div>
+        <div class="dropdown-btn">Contact</div>
       `;
-    
-    // Ensure links are clickable by adding event listeners
-    const links = dropdown.querySelectorAll('a');
-    links.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevent the click from bubbling up
-        // Navigate to the href
-        window.location.href = this.getAttribute('href');
+
+    // Make dropdown divs clickable links
+    const dropdownBtns = dropdown.querySelectorAll(".dropdown-btn");
+    for (let i = 0; i < dropdownBtns.length; i++) {
+      dropdownBtns[i].addEventListener("click", function () {
+"
       });
-    });
+    }
     // Toggle dropdown visibility
     const isShowing = dropdown.classList.toggle("show");
     if (isShowing) {
       mainPage.classList.add("fade");
-      // Add click listener with a small delay to avoid immediate triggering
-      setTimeout(() => {
-        document.addEventListener("click", clickOffDropdown);
-      }, 100);
     } else {
       mainPage.classList.remove("fade");
       document.removeEventListener("click", clickOffDropdown);
