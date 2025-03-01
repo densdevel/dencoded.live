@@ -345,12 +345,8 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
   if (depth === 0 || isTerminal) {
     if (isTerminal) {
       // If AI wins
-      if (checkWins(board, true) && turn === 1) {
-        return [null, 1000000];
-      }
-      // If player wins
-      else if (checkWins(board, true) && turn === 0) {
-        return [null, -1000000];
+      if (checkWins(board, true)) {
+        return [null, maximizingPlayer ? 1000000 : -1000000];
       }
       // Game is over, no more valid moves
       else {
@@ -358,7 +354,7 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
       }
     } else {
       // Evaluate board position
-      return [null, evaluateBoard(board, turn)];
+      return [null, evaluateBoard(board, maximizingPlayer ? 1 : 0)];
     }
   }
 
@@ -372,8 +368,14 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
 
       // Make move for AI
       makeMove(tempBoard, col, 1, p2color);
-
+      
+      // Save current turn
+      const currentTurn = turn;
+      // Temporarily set turn to AI for win checking
+      turn = 1;
       const newScore = minimax(tempBoard, depth - 1, alpha, beta, false)[1];
+      // Restore turn
+      turn = currentTurn;
 
       if (newScore > value) {
         value = newScore;
@@ -397,8 +399,14 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
 
       // Make move for player
       makeMove(tempBoard, col, 0, p1color);
-
+      
+      // Save current turn
+      const currentTurn = turn;
+      // Temporarily set turn to player for win checking
+      turn = 0;
       const newScore = minimax(tempBoard, depth - 1, alpha, beta, true)[1];
+      // Restore turn
+      turn = currentTurn;
 
       if (newScore < value) {
         value = newScore;
@@ -417,7 +425,7 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
 
 function computerMove(arr) {
   // Use minimax algorithm to find the best move
-  const depth = 4; // Look ahead 4 moves (adjust for difficulty)
+  const depth = 5; // Increase depth for better lookahead
   const column = minimax(arr, depth, -Infinity, Infinity, true)[0];
 
   // If minimax returns a valid column, play it
@@ -426,26 +434,7 @@ function computerMove(arr) {
     return;
   }
 
-  // Fallback to simple strategy if minimax fails
-  let tempArr = createGrid(7, 6);
-  const testWin = true;
-
-  // Check for opponent's immediate win and block it
-  turn = (turn + 1) % 2; // Switch to player's perspective
-  for (let i = 0; i < arr.length; i++) {
-    if (columnFull(i, arr)) continue;
-
-    copyValues(arr, tempArr);
-    playMove(i, tempArr);
-    if (checkWins(tempArr, testWin)) {
-      turn = (turn + 1) % 2; // Switch back to AI
-      playMove(i, arr);
-      return;
-    }
-  }
-  turn = (turn + 1) % 2; // Switch back to AI
-
-  // Play in the center if possible
+  // If minimax fails, play in the center if possible
   if (!columnFull(3, arr)) {
     playMove(3, arr);
     return;
