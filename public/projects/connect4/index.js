@@ -209,10 +209,10 @@ function checkWins(arr, testWin) {
 
 function gameEnded(turn) {
   if (turn === 0) {
-    alert(player2 + " wins!");
+    alert(player1 + " wins!");
     return;
   }
-  alert(player1 + " wins!");
+  alert(player2 + " wins!");
   return;
 }
 
@@ -425,58 +425,58 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
 
 function computerMove(arr) {
   console.log("Computer thinking...");
-  
+
   // Create a copy of the board for minimax to work with
   const tempBoard = createGrid(7, 6);
   copyValues(arr, tempBoard);
-  
+
   // Use minimax algorithm to find the best move
   const depth = 4; // Slightly reduce depth for better performance
   const result = minimax(tempBoard, depth, -Infinity, Infinity, true);
   const column = result[0];
   const score = result[1];
-  
+
   console.log("Minimax selected column:", column, "with score:", score);
-  
+
   // If minimax returns a valid column, play it
   if (column !== null && column >= 0 && column < 7 && !columnFull(column, arr)) {
     playMove(column, arr);
     return;
   }
-  
+
   console.log("Minimax failed, using fallback strategy");
-  
+
   // Check for immediate win
   for (let i = 0; i < 7; i++) {
     if (columnFull(i, arr)) continue;
-    
+
     const testBoard = createGrid(7, 6);
     copyValues(arr, testBoard);
-    
+
     // Test AI move
     const currentTurn = turn;
     playMove(i, testBoard);
-    
+
     if (checkWins(testBoard, true)) {
       console.log("Found winning move at column", i);
       playMove(i, arr);
       return;
     }
   }
-  
+
   // Check for opponent's immediate win and block it
   const currentTurn = turn;
   turn = 0; // Switch to player's perspective
-  
+
   for (let i = 0; i < 7; i++) {
     if (columnFull(i, arr)) continue;
-    
+
     const testBoard = createGrid(7, 6);
     copyValues(arr, testBoard);
-    
+
     // Test player move
     playMove(i, testBoard);
-    
+
     if (checkWins(testBoard, true)) {
       console.log("Blocking opponent's win at column", i);
       turn = currentTurn; // Switch back to AI
@@ -485,14 +485,14 @@ function computerMove(arr) {
     }
   }
   turn = currentTurn; // Switch back to AI
-  
+
   // If center is available, play there
   if (!columnFull(3, arr)) {
     console.log("Playing in center column");
     playMove(3, arr);
     return;
   }
-  
+
   // Find any valid column
   for (let i = 0; i < 7; i++) {
     if (!columnFull(i, arr)) {
@@ -512,15 +512,15 @@ canvas.addEventListener("click", function (e) {
   // Only process click if game has started and it's player's turn
   if (turn === 0 && gameStarted) {
     // Check if selected column is valid (within bounds and not full)
-    if (selectedCol >= 0 && selectedCol < 7 && !columnFull(selectedCol, boardGrid)) {
+    if (!columnFull(selectedCol, boardGrid)) {
       playMove(selectedCol, boardGrid); // Player's move
-      
+
       // Check for win after player's move
       if (checkWins(boardGrid, true)) {
         checkWins(boardGrid, false); // End game if player won
         return;
       }
-      
+
       // If game is still going, make computer move
       turn = 1;
       // Use setTimeout to allow the player's move to render first
@@ -530,7 +530,7 @@ canvas.addEventListener("click", function (e) {
         if (gameStarted) {
           turn = 0;
         }
-      }, 500);
+      }, 50);
     }
   }
 });
