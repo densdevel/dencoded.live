@@ -213,6 +213,7 @@ function gameEnded(turn) {
     return;
   }
   alert(player1 + " wins!");
+  return;
 }
 
 function copyValues(arr, newArr) {
@@ -399,57 +400,12 @@ function computerMove(arr) {
   // Use minimax algorithm to find the best move
   const depth = 4; // Look ahead 4 moves (adjust for difficulty)
   const column = minimax(arr, depth, -Infinity, Infinity, true)[0];
-
   // If minimax returns a valid column, play it
   if (column !== null && !columnFull(column, arr)) {
     playMove(column, arr);
     return;
   }
-
-  // Fallback to simple strategy if minimax fails
-  let tempArr = createGrid(7, 6);
-  const testWin = true; // This is just a flag to indicate we're testing for wins, not ending the game
-  copyValues(arr, tempArr);
-
-  // Check for immediate win
-  for (let i = 0; i < arr.length; i++) {
-    if (columnFull(i, arr)) continue;
-
-    copyValues(arr, tempArr);
-    playMove(i, tempArr);
-    if (checkWins(tempArr, testWin)) {
-      playMove(i, arr);
-      return;
-    }
-  }
-
-  // Check for opponent's immediate win and block it
   turn = (turn + 1) % 2;
-  for (let i = 0; i < arr.length; i++) {
-    if (columnFull(i, arr)) continue;
-
-    copyValues(arr, tempArr);
-    playMove(i, tempArr);
-    if (checkWins(tempArr, testWin)) {
-      turn = (turn + 1) % 2;
-      playMove(i, arr);
-      return;
-    }
-  }
-  turn = (turn + 1) % 2;
-
-  // Play in the center if possible
-  if (!columnFull(3, arr)) {
-    playMove(3, arr);
-    return;
-  }
-
-  // Play randomly as a last resort
-  let random = getRandomInt(7);
-  while (columnFull(random, arr)) {
-    random = getRandomInt(7);
-  }
-  playMove(random, arr);
   return;
 }
 
