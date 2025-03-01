@@ -209,10 +209,10 @@ function checkWins(arr, testWin) {
 
 function gameEnded(turn) {
   if (turn === 0) {
-    alert(player1 + " wins!");
+    alert(player2 + " wins!");
     return;
   }
-  alert(player2 + " wins!");
+  alert(player1 + " wins!");
 }
 
 function threeInARow(arr) {
