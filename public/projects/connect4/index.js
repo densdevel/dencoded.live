@@ -408,7 +408,7 @@ function computerMove(arr) {
 
   // Fallback to simple strategy if minimax fails
   let tempArr = createGrid(7, 6);
-  let testWin = true;
+  const testWin = true; // This is just a flag to indicate we're testing for wins, not ending the game
   copyValues(arr, tempArr);
 
   // Check for immediate win
