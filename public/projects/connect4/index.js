@@ -215,24 +215,6 @@ function gameEnded(turn) {
   alert(player1 + " wins!");
 }
 
-function threeInARow(arr) {
-  for (let i = 1; i < 4; i++) {
-    for (let j = 0; j < arr[0].length; j++) {
-      if (j === 5) {
-        if (arr[i][j].color === arr[i + 1][j].color && arr[i + 1][j].color === arr[i + 2][j].color) {
-          return true;
-        }
-      }
-      if (arr[i - 1][j + 1].color !== null && arr[i + 3][j + 1].color !== null) {
-        if (arr[i][j].color === arr[i + 1][j].color && arr[i + 1][j].color === arr[i + 2][j].color) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-}
-
 function copyValues(arr, newArr) {
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < 6; j++) {
@@ -246,54 +228,35 @@ function copyValues(arr, newArr) {
 // Evaluate board position for minimax
 function evaluateBoard(board, playerType) {
   let score = 0;
-  
+
   // Check horizontal windows
   for (let row = 0; row < 6; row++) {
     for (let col = 0; col < 4; col++) {
-      score += evaluateWindow(
-        [board[col][row].type, board[col+1][row].type, board[col+2][row].type, board[col+3][row].type],
-        playerType
-      );
+      score += evaluateWindow([board[col][row].type, board[col + 1][row].type, board[col + 2][row].type, board[col + 3][row].type], playerType);
     }
   }
-  
+
   // Check vertical windows
   for (let col = 0; col < 7; col++) {
     for (let row = 0; row < 3; row++) {
-      score += evaluateWindow(
-        [board[col][row].type, board[col][row+1].type, board[col][row+2].type, board[col][row+3].type],
-        playerType
-      );
+      score += evaluateWindow([board[col][row].type, board[col][row + 1].type, board[col][row + 2].type, board[col][row + 3].type], playerType);
     }
   }
-  
+
   // Check diagonal windows (positive slope)
   for (let col = 0; col < 4; col++) {
     for (let row = 0; row < 3; row++) {
-      score += evaluateWindow(
-        [board[col][row].type, board[col+1][row+1].type, board[col+2][row+2].type, board[col+3][row+3].type],
-        playerType
-      );
+      score += evaluateWindow([board[col][row].type, board[col + 1][row + 1].type, board[col + 2][row + 2].type, board[col + 3][row + 3].type], playerType);
     }
   }
-  
+
   // Check diagonal windows (negative slope)
   for (let col = 0; col < 4; col++) {
     for (let row = 3; row < 6; row++) {
-      score += evaluateWindow(
-        [board[col][row].type, board[col+1][row-1].type, board[col+2][row-2].type, board[col+3][row-3].type],
-        playerType
-      );
+      score += evaluateWindow([board[col][row].type, board[col + 1][row - 1].type, board[col + 2][row - 2].type, board[col + 3][row - 3].type], playerType);
     }
   }
-  
-  // Prefer center column
-  for (let row = 0; row < 6; row++) {
-    if (board[3][row].type === playerType) {
-      score += 3;
-    }
-  }
-  
+
   return score;
 }
 
@@ -301,26 +264,26 @@ function evaluateBoard(board, playerType) {
 function evaluateWindow(window, playerType) {
   const opponentType = playerType === 0 ? 1 : 0;
   let score = 0;
-  
+
   // Count pieces in window
-  const playerCount = window.filter(type => type === playerType).length;
-  const opponentCount = window.filter(type => type === opponentType).length;
-  const emptyCount = window.filter(type => type === -1).length;
-  
+  const playerCount = window.filter((type) => type === playerType).length;
+  const opponentCount = window.filter((type) => type === opponentType).length;
+  const emptyCount = window.filter((type) => type === -1).length;
+
   // Score the window
   if (playerCount === 4) {
     score += 100; // Win
   } else if (playerCount === 3 && emptyCount === 1) {
-    score += 5;   // Three in a row
+    score += 5; // Three in a row
   } else if (playerCount === 2 && emptyCount === 2) {
-    score += 2;   // Two in a row
+    score += 2; // Two in a row
   }
-  
+
   // Block opponent
   if (opponentCount === 3 && emptyCount === 1) {
-    score -= 4;   // Block opponent's three in a row
+    score -= 4; // Block opponent's three in a row
   }
-  
+
   return score;
 }
 
@@ -356,7 +319,7 @@ function makeMove(board, col, playerType, playerColor) {
 // Minimax algorithm with alpha-beta pruning
 function minimax(board, depth, alpha, beta, maximizingPlayer) {
   const validLocations = getValidLocations(board);
-  
+
   // Check for terminal node (win, lose, or full board)
   const isTerminal = checkWins(board, true) || validLocations.length === 0;
   if (depth === 0 || isTerminal) {
@@ -378,56 +341,56 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
       return [null, evaluateBoard(board, turn)];
     }
   }
-  
+
   if (maximizingPlayer) {
     let value = -Infinity;
     let column = validLocations[0];
-    
+
     for (let col of validLocations) {
       const tempBoard = createGrid(7, 6);
       copyValues(board, tempBoard);
-      
+
       // Make move for AI
       makeMove(tempBoard, col, 1, p2color);
-      
+
       const newScore = minimax(tempBoard, depth - 1, alpha, beta, false)[1];
-      
+
       if (newScore > value) {
         value = newScore;
         column = col;
       }
-      
+
       alpha = Math.max(alpha, value);
       if (alpha >= beta) {
         break; // Beta cutoff
       }
     }
-    
+
     return [column, value];
   } else {
     let value = Infinity;
     let column = validLocations[0];
-    
+
     for (let col of validLocations) {
       const tempBoard = createGrid(7, 6);
       copyValues(board, tempBoard);
-      
+
       // Make move for player
       makeMove(tempBoard, col, 0, p1color);
-      
+
       const newScore = minimax(tempBoard, depth - 1, alpha, beta, true)[1];
-      
+
       if (newScore < value) {
         value = newScore;
         column = col;
       }
-      
+
       beta = Math.min(beta, value);
       if (alpha >= beta) {
         break; // Alpha cutoff
       }
     }
-    
+
     return [column, value];
   }
 }
@@ -436,22 +399,22 @@ function computerMove(arr) {
   // Use minimax algorithm to find the best move
   const depth = 4; // Look ahead 4 moves (adjust for difficulty)
   const column = minimax(arr, depth, -Infinity, Infinity, true)[0];
-  
+
   // If minimax returns a valid column, play it
   if (column !== null && !columnFull(column, arr)) {
     playMove(column, arr);
     return;
   }
-  
+
   // Fallback to simple strategy if minimax fails
   let tempArr = createGrid(7, 6);
   let testWin = true;
   copyValues(arr, tempArr);
-  
+
   // Check for immediate win
   for (let i = 0; i < arr.length; i++) {
     if (columnFull(i, arr)) continue;
-    
+
     copyValues(arr, tempArr);
     playMove(i, tempArr);
     if (checkWins(tempArr, testWin)) {
@@ -459,12 +422,12 @@ function computerMove(arr) {
       return;
     }
   }
-  
+
   // Check for opponent's immediate win and block it
   turn = (turn + 1) % 2;
   for (let i = 0; i < arr.length; i++) {
     if (columnFull(i, arr)) continue;
-    
+
     copyValues(arr, tempArr);
     playMove(i, tempArr);
     if (checkWins(tempArr, testWin)) {
@@ -474,13 +437,13 @@ function computerMove(arr) {
     }
   }
   turn = (turn + 1) % 2;
-  
+
   // Play in the center if possible
   if (!columnFull(3, arr)) {
     playMove(3, arr);
     return;
   }
-  
+
   // Play randomly as a last resort
   let random = getRandomInt(7);
   while (columnFull(random, arr)) {
