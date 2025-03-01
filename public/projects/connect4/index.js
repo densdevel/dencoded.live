@@ -243,51 +243,248 @@ function copyValues(arr, newArr) {
   return newArr;
 }
 
+// Evaluate board position for minimax
+function evaluateBoard(board, playerType) {
+  let score = 0;
+  
+  // Check horizontal windows
+  for (let row = 0; row < 6; row++) {
+    for (let col = 0; col < 4; col++) {
+      score += evaluateWindow(
+        [board[col][row].type, board[col+1][row].type, board[col+2][row].type, board[col+3][row].type],
+        playerType
+      );
+    }
+  }
+  
+  // Check vertical windows
+  for (let col = 0; col < 7; col++) {
+    for (let row = 0; row < 3; row++) {
+      score += evaluateWindow(
+        [board[col][row].type, board[col][row+1].type, board[col][row+2].type, board[col][row+3].type],
+        playerType
+      );
+    }
+  }
+  
+  // Check diagonal windows (positive slope)
+  for (let col = 0; col < 4; col++) {
+    for (let row = 0; row < 3; row++) {
+      score += evaluateWindow(
+        [board[col][row].type, board[col+1][row+1].type, board[col+2][row+2].type, board[col+3][row+3].type],
+        playerType
+      );
+    }
+  }
+  
+  // Check diagonal windows (negative slope)
+  for (let col = 0; col < 4; col++) {
+    for (let row = 3; row < 6; row++) {
+      score += evaluateWindow(
+        [board[col][row].type, board[col+1][row-1].type, board[col+2][row-2].type, board[col+3][row-3].type],
+        playerType
+      );
+    }
+  }
+  
+  // Prefer center column
+  for (let row = 0; row < 6; row++) {
+    if (board[3][row].type === playerType) {
+      score += 3;
+    }
+  }
+  
+  return score;
+}
+
+// Evaluate a window of 4 positions
+function evaluateWindow(window, playerType) {
+  const opponentType = playerType === 0 ? 1 : 0;
+  let score = 0;
+  
+  // Count pieces in window
+  const playerCount = window.filter(type => type === playerType).length;
+  const opponentCount = window.filter(type => type === opponentType).length;
+  const emptyCount = window.filter(type => type === -1).length;
+  
+  // Score the window
+  if (playerCount === 4) {
+    score += 100; // Win
+  } else if (playerCount === 3 && emptyCount === 1) {
+    score += 5;   // Three in a row
+  } else if (playerCount === 2 && emptyCount === 2) {
+    score += 2;   // Two in a row
+  }
+  
+  // Block opponent
+  if (opponentCount === 3 && emptyCount === 1) {
+    score -= 4;   // Block opponent's three in a row
+  }
+  
+  return score;
+}
+
+// Find valid locations for next move
+function getValidLocations(board) {
+  const validLocations = [];
+  for (let col = 0; col < 7; col++) {
+    if (!columnFull(col, board)) {
+      validLocations.push(col);
+    }
+  }
+  return validLocations;
+}
+
+// Get next open row in a column
+function getNextOpenRow(board, col) {
+  for (let row = 5; row >= 0; row--) {
+    if (board[col][row].color === null) {
+      return row;
+    }
+  }
+  return -1;
+}
+
+// Make a temporary move
+function makeMove(board, col, playerType, playerColor) {
+  const row = getNextOpenRow(board, col);
+  board[col][row].type = playerType;
+  board[col][row].color = playerColor;
+  return board;
+}
+
+// Minimax algorithm with alpha-beta pruning
+function minimax(board, depth, alpha, beta, maximizingPlayer) {
+  const validLocations = getValidLocations(board);
+  
+  // Check for terminal node (win, lose, or full board)
+  const isTerminal = checkWins(board, true) || validLocations.length === 0;
+  if (depth === 0 || isTerminal) {
+    if (isTerminal) {
+      // If AI wins
+      if (checkWins(board, true) && turn === 1) {
+        return [null, 1000000];
+      }
+      // If player wins
+      else if (checkWins(board, true) && turn === 0) {
+        return [null, -1000000];
+      }
+      // Game is over, no more valid moves
+      else {
+        return [null, 0];
+      }
+    } else {
+      // Evaluate board position
+      return [null, evaluateBoard(board, turn)];
+    }
+  }
+  
+  if (maximizingPlayer) {
+    let value = -Infinity;
+    let column = validLocations[0];
+    
+    for (let col of validLocations) {
+      const tempBoard = createGrid(7, 6);
+      copyValues(board, tempBoard);
+      
+      // Make move for AI
+      makeMove(tempBoard, col, 1, p2color);
+      
+      const newScore = minimax(tempBoard, depth - 1, alpha, beta, false)[1];
+      
+      if (newScore > value) {
+        value = newScore;
+        column = col;
+      }
+      
+      alpha = Math.max(alpha, value);
+      if (alpha >= beta) {
+        break; // Beta cutoff
+      }
+    }
+    
+    return [column, value];
+  } else {
+    let value = Infinity;
+    let column = validLocations[0];
+    
+    for (let col of validLocations) {
+      const tempBoard = createGrid(7, 6);
+      copyValues(board, tempBoard);
+      
+      // Make move for player
+      makeMove(tempBoard, col, 0, p1color);
+      
+      const newScore = minimax(tempBoard, depth - 1, alpha, beta, true)[1];
+      
+      if (newScore < value) {
+        value = newScore;
+        column = col;
+      }
+      
+      beta = Math.min(beta, value);
+      if (alpha >= beta) {
+        break; // Alpha cutoff
+      }
+    }
+    
+    return [column, value];
+  }
+}
+
 function computerMove(arr) {
+  // Use minimax algorithm to find the best move
+  const depth = 4; // Look ahead 4 moves (adjust for difficulty)
+  const column = minimax(arr, depth, -Infinity, Infinity, true)[0];
+  
+  // If minimax returns a valid column, play it
+  if (column !== null && !columnFull(column, arr)) {
+    playMove(column, arr);
+    return;
+  }
+  
+  // Fallback to simple strategy if minimax fails
   let tempArr = createGrid(7, 6);
   let testWin = true;
   copyValues(arr, tempArr);
-  //Check for win on next move and play it OR check for opponent win on next move and block it
+  
+  // Check for immediate win
   for (let i = 0; i < arr.length; i++) {
+    if (columnFull(i, arr)) continue;
+    
+    copyValues(arr, tempArr);
     playMove(i, tempArr);
     if (checkWins(tempArr, testWin)) {
       playMove(i, arr);
-      console.log("move played");
       return;
     }
-    copyValues(arr, tempArr);
-    turn = (turn + 1) % 2;
-    console.log(tempArr);
-    playMove(i, tempArr);
-    if (checkWins(tempArr, testWin)) {
-      playMove(i, arr);
-      console.log("move played 2");
-      return;
-    }
-    turn = (turn + 1) % 2;
-    copyValues(arr, tempArr);
   }
-  //Check for 3 in a row with empty space on either side playable on next move by either player and play/block it
-  // for (let i = 0; i < arr.length; i++) {
-  //   playMove(i, tempArr);
-  //   if (threeInARow(tempArr)) {
-  //     playMove(i, arr);
-  //     return;
-  //   }
-  //   tempArr = [...arr];
-  //   turn = (turn + 1) % 2;
-  //   playMove(i, arr);
-  //   if (threeInARow(tempArr)) {
-  //     turn = (turn + 1) % 2;
-  //     playMove(i, arr);
-  //     return;
-  //   }
-  //   tempArr = [...arr];
-  // }
-  // Play randomly
-  let random = getRandomInt(6);
+  
+  // Check for opponent's immediate win and block it
+  turn = (turn + 1) % 2;
+  for (let i = 0; i < arr.length; i++) {
+    if (columnFull(i, arr)) continue;
+    
+    copyValues(arr, tempArr);
+    playMove(i, tempArr);
+    if (checkWins(tempArr, testWin)) {
+      turn = (turn + 1) % 2;
+      playMove(i, arr);
+      return;
+    }
+  }
+  turn = (turn + 1) % 2;
+  
+  // Play in the center if possible
+  if (!columnFull(3, arr)) {
+    playMove(3, arr);
+    return;
+  }
+  
+  // Play randomly as a last resort
+  let random = getRandomInt(7);
   while (columnFull(random, arr)) {
-    random = getRandomInt(6);
+    random = getRandomInt(7);
   }
   playMove(random, arr);
   return;
