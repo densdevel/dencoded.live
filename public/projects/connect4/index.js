@@ -277,12 +277,27 @@ function evaluateWindow(window, playerType) {
   } else if (playerCount === 3 && emptyCount === 1) {
     score += 5; // Three in a row
   } else if (playerCount === 2 && emptyCount === 2) {
-    score += 2; // Two in a row
+    score += 2; // Two in a row with two empty spaces
+  }
+
+  // Check for the specific pattern [o-oo] or [oo-o]
+  if (playerCount === 3 && emptyCount === 1) {
+    // Check for pattern [o-oo]
+    if ((window[0] === playerType && window[1] === -1 && window[2] === playerType && window[3] === playerType) ||
+        (window[0] === playerType && window[1] === playerType && window[2] === -1 && window[3] === playerType)) {
+      score += 8; // This pattern is very strong
+    }
   }
 
   // Block opponent
   if (opponentCount === 3 && emptyCount === 1) {
     score -= 4; // Block opponent's three in a row
+    
+    // Check for opponent's pattern [o-oo]
+    if ((window[0] === opponentType && window[1] === -1 && window[2] === opponentType && window[3] === opponentType) ||
+        (window[0] === opponentType && window[1] === opponentType && window[2] === -1 && window[3] === opponentType)) {
+      score -= 8; // Block this pattern with higher priority
+    }
   }
 
   return score;
