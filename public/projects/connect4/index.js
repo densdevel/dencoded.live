@@ -287,7 +287,7 @@ function evaluateWindow(window, playerType) {
       (window[0] === playerType && window[1] === -1 && window[2] === playerType && window[3] === playerType) ||
       (window[0] === playerType && window[1] === playerType && window[2] === -1 && window[3] === playerType)
     ) {
-      score += 8; // This pattern is very strong
+      score += 5; // Equal in strength to 3 in a row
     }
   }
 
@@ -300,7 +300,7 @@ function evaluateWindow(window, playerType) {
       (window[0] === opponentType && window[1] === -1 && window[2] === opponentType && window[3] === opponentType) ||
       (window[0] === opponentType && window[1] === opponentType && window[2] === -1 && window[3] === opponentType)
     ) {
-      score -= 8; // Block this pattern with higher priority
+      score -= 4;
     }
   }
 
