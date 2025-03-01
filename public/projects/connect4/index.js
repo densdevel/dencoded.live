@@ -108,15 +108,14 @@ function checkWins(arr, testWin) {
           if (testWin) {
             return true;
           }
+          gameStarted = false;
           if (turn === 1) {
-            gameStarted = false;
             player2Wins++;
-            gameEnded(turn);
+            setTimeout(() => gameEnded(turn), 100);
             return;
           }
-          gameStarted = false;
           player1Wins++;
-          gameEnded(turn);
+          setTimeout(() => gameEnded(turn), 100);
           return;
         }
       }
@@ -140,14 +139,12 @@ function checkWins(arr, testWin) {
           }
           gameStarted = false;
           if (turn === 1) {
-            gameStarted = false;
             player2Wins++;
-            gameEnded(turn);
+            setTimeout(() => gameEnded(turn), 100);
             return;
           }
-          gameStarted = false;
           player1Wins++;
-          gameEnded(turn);
+          setTimeout(() => gameEnded(turn), 100);
           return;
         }
       }
@@ -170,14 +167,12 @@ function checkWins(arr, testWin) {
           }
           gameStarted = false;
           if (turn === 1) {
-            gameStarted = false;
             player2Wins++;
-            gameEnded(turn);
+            setTimeout(() => gameEnded(turn), 100);
             return;
           }
-          gameStarted = false;
           player1Wins++;
-          gameEnded(turn);
+          setTimeout(() => gameEnded(turn), 100);
           return;
         }
       }
