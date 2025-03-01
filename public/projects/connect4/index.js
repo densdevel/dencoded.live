@@ -419,12 +419,49 @@ function computerMove(arr) {
   // Use minimax algorithm to find the best move
   const depth = 4; // Look ahead 4 moves (adjust for difficulty)
   const column = minimax(arr, depth, -Infinity, Infinity, true)[0];
+  
   // If minimax returns a valid column, play it
   if (column !== null && !columnFull(column, arr)) {
     playMove(column, arr);
     return;
   }
-  turn = (turn + 1) % 2;
+  
+  // Fallback to simple strategy if minimax fails
+  let tempArr = createGrid(7, 6);
+  const testWin = true;
+  
+  // Check for opponent's immediate win and block it
+  turn = (turn + 1) % 2; // Switch to player's perspective
+  for (let i = 0; i < arr.length; i++) {
+    if (columnFull(i, arr)) continue;
+    
+    copyValues(arr, tempArr);
+    playMove(i, tempArr);
+    if (checkWins(tempArr, testWin)) {
+      turn = (turn + 1) % 2; // Switch back to AI
+      playMove(i, arr);
+      return;
+    }
+  }
+  turn = (turn + 1) % 2; // Switch back to AI
+  
+  // Play in the center if possible
+  if (!columnFull(3, arr)) {
+    playMove(3, arr);
+    return;
+  }
+  
+  // Play randomly as a last resort
+  let random = getRandomInt(7);
+  let attempts = 0;
+  while (columnFull(random, arr) && attempts < 20) {
+    random = getRandomInt(7);
+    attempts++;
+  }
+  
+  if (!columnFull(random, arr)) {
+    playMove(random, arr);
+  }
   return;
 }
 
