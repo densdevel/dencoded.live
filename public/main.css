@@ -51,38 +51,34 @@ a:hover {
 }
 #dropdown {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 65px;
   left: 0;
   width: 100%;
   height: auto;
-  background-color: rgba(159, 190, 186, 0.9);
+  background-color: rgba(159, 190, 186, 0.616);
   flex-direction: column;
-  z-index: 1000;
+  z-index: 100;
   padding: 10px 0;
 }
 #dropdown.show {
   display: flex;
 }
 #dropdown div {
-  width: 100%;
-  z-index: 1001;
-}
-#dropdown div a {
   color: white;
   position: relative;
   padding-top: 20px;
   padding-bottom: 10px;
   font-size: 22px;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: block;
   cursor: pointer;
   font-family: monospace;
-  z-index: 1002;
-  pointer-events: auto;
+  width: 100vw;
+  cursor: pointer;
 }
-#dropdown div a:last-child {
+#dropdown div:last-child {
   border-bottom: none;
 }
 #main {
@@ -92,8 +88,9 @@ a:hover {
   font-family: "Lobster", cursive;
 }
 .fade {
-  opacity: 0.2;
+  opacity: 0.02;
   transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
 }
 #center {
   height: 100vh;
@@ -106,7 +103,7 @@ a:hover {
 }
 #content {
   padding-top: 80px;
-  font-size: 24px;
+  font-size: 22px;
 }
 @media (max-width: 768px) {
   .mantras {

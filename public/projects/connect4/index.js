@@ -368,7 +368,7 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
 
       // Make move for AI
       makeMove(tempBoard, col, 1, p2color);
-      
+
       // Save current turn
       const currentTurn = turn;
       // Temporarily set turn to AI for win checking
@@ -399,7 +399,7 @@ function minimax(board, depth, alpha, beta, maximizingPlayer) {
 
       // Make move for player
       makeMove(tempBoard, col, 0, p1color);
-      
+
       // Save current turn
       const currentTurn = turn;
       // Temporarily set turn to player for win checking
@@ -461,9 +461,11 @@ canvas.addEventListener("click", function (e) {
   const selectedCol = Math.floor(e.offsetX / 50);
 
   if (turn === 0 && gameStarted) {
-    playMove(selectedCol, boardGrid); // Player's move
-    checkWins(boardGrid, false);
-    turn = 1;
+    if (!columnFull(selectedCol, boardGrid)) {
+      playMove(selectedCol, boardGrid); // Player's move
+      checkWins(boardGrid, false);
+      turn = 1;
+    }
   }
   if (turn === 1 && gameStarted) {
     computerMove(boardGrid); // Computer's move
