@@ -1,2 +1,7 @@
 .aider*
 node_modules
+Dockerfile
+compose.yaml
+package-lock.json
+README.Docker.node_modules
+.dockerignore
